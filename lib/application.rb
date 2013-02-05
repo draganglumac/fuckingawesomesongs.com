@@ -25,10 +25,13 @@ class Application < Sinatra::Base
 
   def next_random_song_url
     random_song = Songs.all.sample
-    @next_random_song_url ||= random_song.url
+    random_song.url
   end
 
   def song
-    Songs.all.find {|s| s.artist.slugify == params[:artist] && s.track.slugify == params[:track]}
+    Songs.all.find do |song|
+      song.artist.slugify == params[:artist] &&
+        song.track.slugify == params[:track]
+    end
   end
 end
